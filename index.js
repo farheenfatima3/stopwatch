@@ -1,6 +1,9 @@
 let startBtn=document.querySelector("#start")
 
 let resetBtn=document.querySelector("#reset")
+let reason=document.querySelector("#reason")
+let add=document.querySelector("#add")
+let list=document.querySelector("#list")
 
 
 var seconds=00;
@@ -69,5 +72,45 @@ function reset(){
 }
 resetBtn.addEventListener("click",reset)
 
-let val=document.getElementById("reason").value
-console.log(val)
+add.addEventListener("click",addLocal)
+function addLocal(){
+    let userReason=reason.value
+    let getting=localStorage.getItem("Reason")
+    
+    if(userReason.trim()!=0){
+    if(getting==null){
+        arr=[]
+    }else{
+        arr=JSON.parse(getting)
+    }
+    arr.push(userReason)
+    localStorage.setItem("Reason",JSON.stringify(arr))
+    }
+    show()
+    reason.value=""
+}
+
+function show(){
+    let showing=''
+    getting=localStorage.getItem("Reason")
+    arr=JSON.parse(getting)
+    arr.forEach(function(item,index){
+        showing+=` <tr>
+        <th>${index+1}</th>
+        <td>${item}<button onClick="edit(${index})">Edit</button><button onClick="delItem(${index})">Delete</button></td>
+    </tr>`
+    })
+list.innerHTML=showing
+}
+
+function delItem(index){
+arr.splice(index,1)
+localStorage.setItem("Reason",JSON.stringify(arr))
+show()
+}
+function edit(index){
+    reason.value=arr[index]
+    let input=document.createElement("input")
+    input.value=index
+  console.log(input)
+}
