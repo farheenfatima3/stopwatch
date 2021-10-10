@@ -73,6 +73,8 @@ function reset(){
     bol=true
 }
 resetBtn.addEventListener("click",reset)
+
+// localStorage
 show()
 add.addEventListener("click",addLocal)
 function addLocal(){
@@ -80,7 +82,7 @@ function addLocal(){
     let getting=localStorage.getItem("Reason")
     
     if(userReason.trim()!=0){
-    if(getting==null){
+    if(getting===null){
         arr=[]
     }else{
         arr=JSON.parse(getting)
@@ -102,8 +104,8 @@ function show(){
         arr=JSON.parse(getting)
     }
     let showing=''
-    getting=localStorage.getItem("Reason")
-    arr=JSON.parse(getting)
+  localStorage.setItem("Reason",JSON.stringify(arr))
+   
     arr.forEach(function(item,index){
         showing+=` <tr>
         <th>${index+1}</th>
